@@ -35,9 +35,7 @@ exports.up = function(knex) {
         .unsigned()
         .notNullable()
         .references("id")
-        .inTable("users")
-        .onUpdate("CASCADE")
-        .onDelete("CASCADE");
+        .inTable("users");
     })
     .createTable("immunizationRecords", tbl => {
       tbl.increments();
