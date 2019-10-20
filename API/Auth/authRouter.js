@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const user = require("./authModel.js");
 const bcrypt = require("bcryptjs");
+const secret = require("../../Secrets/secret");
+const jwt = require("jsonwebtoken");
+const generateMedToken = require("./MedToken");
 
 router.post("/user-register", (req, res) => {
   let creds = req.body;
@@ -29,9 +32,10 @@ router.post("/user-register", (req, res) => {
 
 router.post("/med-register", (req, res) => {
   let medCreds = req.body;
+  console.log(medCreds);
   if (
-    !medCreds.userEmail ||
-    !medCreds.userPassword ||
+    !medCreds.medicEmail ||
+    !medCreds.medicPassword ||
     !medCreds.company ||
     !medCreds.position
   ) {
@@ -40,10 +44,11 @@ router.post("/med-register", (req, res) => {
         "Email, password, company and position are required for registering an account",
     });
   } else {
-    const hash = bcrypt.hashSync(medCreds.userPassword, 8);
-    medCreds.userPassword = hash;
+    const hash = bcrypt.hashSync(medCreds.medicPassword, 8);
+    medCreds.medicPassword = hash;
+    console.log(medCreds);
     user
-      .addUser(medCreds)
+      .addMedPro(medCreds)
       .then(pro => {
         res.status(201).json(pro);
       })
@@ -57,22 +62,69 @@ router.post("/med-register", (req, res) => {
 });
 
 router.post("/user-login", (req, res) => {
-  const userlogin = req.body;
-  user
-    .findUserBy(userlogin.userEmail)
-    .first()
-    .then(user => {
-      if (user && bcrypt.compareSync(userlogin.userPassword, user.password)) {
-        const token = generateToken(user);
-        res.status(200).json({ message: `Welcome ${user.userName}`, token });
-      } else {
-        res.status(401).json({ message: "Invalid User Credentials" });
-      }
-    })
-    .catch(error => {
-      res.status(500).json({ errorMessage: "Error user login to server" });
-    });
+  let { userEmail, userPassword } = req.body;
+  let { id } = req.params;
+  console.log(req.body);
+  if (!userEmail || !userPassword) {
+    res.status(401).json({ message: "Missing email and password for login" });
+  } else {
+    user
+      .findUserBy({ userEmail })
+      .first()
+      .then(user => {
+        console.log(user);
+        if (user && bcrypt.compareSync(userPassword, user.userPassword)) {
+          const token = generateToken(user);
+          res.status(200).json({ message: `Welcome ${user.userName}`, token });
+        } else {
+          res.status(401).json({ message: "Invalid User Credentials" });
+        }
+      })
+      .catch(error => {
+        res.status(500).json({ errorMessage: "Error user login to server" });
+      });
+  }
 });
 
-router.post("/medpro-login", (req, res) => {});
+router.post("/med-login", (req, res) => {
+  const { medicEmail, medicPassword } = req.body;
+  console.log(req.body);
+  if (!medicEmail || !medicPassword) {
+    res
+      .status(404)
+      .json({ message: "Email and password are required for login" });
+  } else {
+    user
+      .findMedBy({ medicEmail })
+      .first()
+      .then(pro => {
+        if (pro) {
+          const medtoken = generateMedToken(pro);
+          res
+            .status(200)
+            .json({ message: `Welcome, ${pro.position}`, medtoken });
+        } else {
+          res
+            .status(401)
+            .json({ message: "Invalid Medical Professional Credentials" });
+        }
+      })
+      .catch(error => {
+        res.status(500).json({
+          errorMessage: "Medical Professional failed to login to the server",
+        });
+      });
+  }
+});
+
+function generateToken(user) {
+  const payload = {
+    subject: user.userEmail,
+  };
+  const options = {
+    expiresIn: "8h",
+  };
+  return jwt.sign(payload, secret.jwtSecret, options);
+}
+
 module.exports = router;
