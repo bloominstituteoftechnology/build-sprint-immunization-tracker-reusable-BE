@@ -153,7 +153,7 @@ Server returns:
   }
 }
 
-### Edit Patient Info from User Account (PUT)
+### EDIT PATIENT INFO FROM USER ACCOUNT (PUT)
 
 https://immunizationtracker-bw.herokuapp.com/api/user/patient/:id
 
@@ -169,7 +169,7 @@ Client sends:
   "message": "Patient information updated"
 }
 
-### Delete Patient Info from User Account (DELETE)
+### DELETE PATIENT INFO FROM USER ACCOUNT (DELETE)
 
 https://immunizationtracker-bw.herokuapp.com/api/user/patient/7
 
@@ -179,3 +179,6 @@ Server returns:
 {
   "message": "Patient deleted"
 }
+
+---
+
