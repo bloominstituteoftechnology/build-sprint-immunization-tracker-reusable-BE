@@ -50,6 +50,7 @@ exports.up = function(knex) {
         .inTable("patients");
     })
     .createTable("permissions", tbl => {
+      tbl.increments();
       tbl.boolean("permission").defaultTo(false);
       tbl
         .integer("patientId")
@@ -63,7 +64,6 @@ exports.up = function(knex) {
         .notNullable()
         .references("id")
         .inTable("medicalProfessionals");
-      tbl.primary(["patientId", "medproId"]);
     });
 };
 
