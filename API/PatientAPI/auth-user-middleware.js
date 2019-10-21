@@ -10,8 +10,12 @@ module.exports = (req, res, next) => {
       if (err) {
         res.status(401).json({ message: "Bad one!" });
       } else {
-        req.username = decodedToken.username;
-        next();
+        if (decodedToken.type === "user") {
+          req.username = decodedToken.username;
+          next();
+        } else {
+          res.status(400).json({ message: "Wrong user type" });
+        }
       }
     });
   } else {
