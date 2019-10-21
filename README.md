@@ -190,13 +190,30 @@ https://immunizationtracker-bw.herokuapp.com/api/perm/add
 
 Client sends:
 
-{"permission": true, "patientId":6, "medproId":1}
+
+
 
 Server returns:
 
 {
   "message": "New permission request posted"
 }
+
+### EDIT PERMISSION GRANTED TO MEDICAL PROFESSIONAL (PUT) (USER ACCESS ONLY)
+
+https://immunizationtracker-bw.herokuapp.com/api/perm/update/:id
+
+**Note: "id" refers to the permission id
+Client sends: 
+
+{"permission": true, "patientId":6, "medproId":1}
+
+Server returns:
+
+{
+  "message": "Permission status changed"
+}
+
 
 ### DISPLAY LIST OF PERMISSIONS BY PATIENT ON USER SIDE(GET) (BOTH USER AND MEDIC HAVE ACCESS)
 
