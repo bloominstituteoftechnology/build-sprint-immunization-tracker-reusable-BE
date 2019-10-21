@@ -30,8 +30,8 @@ function addPerm(perm) {
   return db("permissions").insert(perm);
 }
 
-function updatePerm(permission, patientId, medproId) {
+function updatePerm(update, updateId) {
   return db("permissions as p")
-    .update("p.permission", permission)
-    .where("p.patientId", "=", patientId, "p.medproId", "=", medproId);
+    .update(update)
+    .where("p.id", updateId);
 }

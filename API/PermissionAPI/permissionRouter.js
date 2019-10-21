@@ -63,17 +63,18 @@ router.get("/:id", restricted, (req, res) => {
 });
 
 //Update permission record
-//400 error keeps on occuring, need fix (think id)
-router.put("/update", restricted, (req, res) => {
-  const { permission, patientId, medproId } = req.body;
+
+router.put("/update/:id", restricted, (req, res) => {
+  const update = req.body;
+  const updateId = req.params.id;
   console.log(req.body);
-  if (!permission || !patientId || !medproId) {
+  if (!update.permission || !update.patientId || !update.medproId) {
     res.status(400).json({
       message:
         "Permission status, patient ID and medical professional ID required for updating permission status",
     });
   } else {
-    db.updatePerm({ permission, patientId, medproId })
+    db.updatePerm(update, updateId)
       .then(perm => {
         res.status(200).json({ message: "Permission status changed" });
       })
