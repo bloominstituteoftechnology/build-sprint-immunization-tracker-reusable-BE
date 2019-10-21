@@ -119,7 +119,6 @@ router.post("/med-login", (req, res) => {
 
 function generateToken(user) {
   const payload = {
-    subject: user.userEmail,
     subject: user.id,
   };
   const options = {

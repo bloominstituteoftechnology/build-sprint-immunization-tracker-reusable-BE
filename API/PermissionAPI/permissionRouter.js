@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const db = require("./permissionModel");
+const restricted = require("../../API/PatientAPI/auth-middleware");
 
 //Get all permission records
-router.get("/", (req, res) => {
+router.get("/", restricted, (req, res) => {
   db.getAllRecord()
     .then(perm => {
       perm.forEach(patient => {
@@ -23,7 +24,7 @@ router.get("/", (req, res) => {
 });
 
 //Get permission record by Patient's ID
-router.get("/patient/:id", (req, res) => {
+router.get("/patient/:id", restricted, (req, res) => {
   const patientid = req.params.id;
   db.getRecordByPatientId(patientid)
     .then(patient => {
@@ -44,7 +45,7 @@ router.get("/patient/:id", (req, res) => {
 });
 
 //Get permission by Medical Profession's ID
-router.get("/:id", (req, res) => {
+router.get("/:id", restricted, (req, res) => {
   const medProId = req.params.id;
   db.getRecordByPermission(medProId)
     .then(perm => {
@@ -62,7 +63,8 @@ router.get("/:id", (req, res) => {
 });
 
 //Update permission record
-router.put("/update", (req, res) => {
+//400 error keeps on occuring, need fix (think id)
+router.put("/update", restricted, (req, res) => {
   const { permission, patientId, medproId } = req.body;
   console.log(req.body);
   if (!permission || !patientId || !medproId) {
@@ -84,7 +86,7 @@ router.put("/update", (req, res) => {
 });
 
 //Add permission record
-router.post("/add", (req, res) => {
+router.post("/add", restricted, (req, res) => {
   const add = req.body;
   db.addPerm(add)
     .then(perm => {

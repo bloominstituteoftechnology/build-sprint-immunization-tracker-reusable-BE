@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const patient = require("./patientModel");
+const restricted = require("./auth-middleware");
 
 //get all patients
-router.get("/", (req, res) => {
+router.get("/", restricted, (req, res) => {
   patient
     .getAllPatients()
     .then(patients => {
@@ -17,7 +18,7 @@ router.get("/", (req, res) => {
 });
 
 //get patient by userID
-router.get("/:id", (req, res) => {
+router.get("/:id", restricted, (req, res) => {
   const userId = req.params.id;
   patient
     .getPatientByUserId(userId)
@@ -38,7 +39,7 @@ router.get("/:id", (req, res) => {
 });
 
 //get patient by patient ID
-router.get("/patient/:id", (req, res) => {
+router.get("/patient/:id", restricted, (req, res) => {
   const patientId = req.params.id;
   patient
     .getPatientById(patientId)
@@ -59,7 +60,7 @@ router.get("/patient/:id", (req, res) => {
 });
 
 //remove patient by ID
-router.delete("/patient/:id", (req, res) => {
+router.delete("/patient/:id", restricted, (req, res) => {
   const deleteId = req.params.id;
   patient
     .removePatient(deleteId)
@@ -80,7 +81,7 @@ router.delete("/patient/:id", (req, res) => {
 });
 
 //add patient
-router.post("/addpatient", (req, res) => {
+router.post("/addpatient", restricted, (req, res) => {
   const addPat = req.body;
   if (
     !addPat.firstName ||
@@ -106,7 +107,7 @@ router.post("/addpatient", (req, res) => {
 });
 
 //edit patient
-router.put("/patient/:id", (req, res) => {
+router.put("/patient/:id", restricted, (req, res) => {
   const updatePat = req.body;
   const updateId = req.params.id;
   if (
