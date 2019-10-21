@@ -14,7 +14,7 @@ https://immunizationtracker-bw.herokuapp.com/
 
 # REGISTRATION & LOGIN
 
-### User Registration (POST)
+### User Registration (POST) 
 
 https://immunizationtracker-bw.herokuapp.com/api/auth/user-register
 
@@ -83,7 +83,7 @@ Server returns:
 
 # PATIENT INFO (USER SIDE)
 
-### DISPLAY PATIENT INFO RELATED TO SPECIFIC USER (GET)
+### DISPLAY PATIENT INFO RELATED TO SPECIFIC USER (GET) (USER ACCESS ONLY)
 
 https://immunizationtracker-bw.herokuapp.com/api/user/:id
 
@@ -119,7 +119,7 @@ Server returns:
   }
 ]
 
-### DISPLAY SINGLE PATIENT INFO (GET)
+### DISPLAY SINGLE PATIENT INFO (GET) (USER ACCESS ONLY)
 
 https://immunizationtracker-bw.herokuapp.com/api/user/patient/:id
 
@@ -140,7 +140,7 @@ Server returns:
   "userId": 5
 }
 
-### ADD PATIENT FROM USER ACCOUNT (POST)
+### ADD PATIENT FROM USER ACCOUNT (POST) (USER ACCESS ONLY)
 
 https://immunizationtracker-bw.herokuapp.com/api/user/addpatient
 
@@ -157,7 +157,7 @@ Server returns:
   }
 }
 
-### EDIT PATIENT INFO FROM USER ACCOUNT (PUT)
+### EDIT PATIENT INFO FROM USER ACCOUNT (PUT) (USER ACCESS ONLY)
 
 https://immunizationtracker-bw.herokuapp.com/api/user/patient/:id
 
@@ -173,7 +173,7 @@ Client sends:
   "message": "Patient information updated"
 }
 
-### DELETE PATIENT INFO FROM USER ACCOUNT (DELETE)
+### DELETE PATIENT INFO FROM USER ACCOUNT (DELETE) (USER ACCESS ONLY)
 
 https://immunizationtracker-bw.herokuapp.com/api/user/patient/7
 
@@ -184,7 +184,7 @@ Server returns:
   "message": "Patient deleted"
 }
 
-### GIVE PERMISSION TO MEDICAL PROFESSIONAL TO ACCESS DATA (POST)
+### GIVE PERMISSION TO MEDICAL PROFESSIONAL TO ACCESS DATA (POST) (USER ACCESS ONLY)
 
 https://immunizationtracker-bw.herokuapp.com/api/perm/add
 
@@ -198,7 +198,7 @@ Server returns:
   "message": "New permission request posted"
 }
 
-### DISPLAY LIST OF PERMISSIONS BY PATIENT ON USER SIDE(GET)
+### DISPLAY LIST OF PERMISSIONS BY PATIENT ON USER SIDE(GET) (BOTH USER AND MEDIC HAVE ACCESS)
 
 https://immunizationtracker-bw.herokuapp.com/api/perm/patient/:id
 
@@ -243,9 +243,9 @@ Server returns:
 
 ---
 
-# PATIENT INFO (MEDICAL PROFESSIONAL SIDE)
+# PATIENT INFO (MEDICAL PROFESSIONAL SIDE) 
 
-### DISPLAY PATIENT INFO ON MEDICAL PROFESSIONAL (GET)
+### DISPLAY PATIENT INFO ON MEDICAL PROFESSIONAL (GET) (MEDIC ACCESS ONLY)
 
 https://immunizationtracker-bw.herokuapp.com/api/perm/:id
 
@@ -276,3 +276,59 @@ Server returns:
 ]
 
 **Note: The server will only show the information of patients who granted permission to medical professional.
+
+#Immunization Records
+
+### ADD IMMUNIZATION RECORD FOR PATIENT (POST) (MEDIC ACCESS ONLY)
+
+https://immunizationtracker-bw.herokuapp.com/api/record/addImmunization
+
+Client sends: 
+
+{"vaccineName": "TDap", "vaccineDate": "2000-10-12", "vaccineLocation": "Houston", "patientId":1}
+
+Server returns:
+
+{
+  "message": "New immunization record added",
+  "record": [
+    3
+  ]
+}
+
+### DELETE IMMUNIZATION RECORD FOR PATIENT (DELETE) (MEDIC ACCESS ONLY)
+
+https://immunizationtracker-bw.herokuapp.com/api/record/vaccine/:id
+
+**Note: "id" in URL refers to the id from "immunization record"
+
+Server returns:
+
+{
+  "message": "Immunization Record deleted"
+}
+
+### GET IMMUNIZATION RECORD BY PATIENT ID (GET) (BOTH USER AND MEDIC HAVE ACCESS)
+
+https://immunizationtracker-bw.herokuapp.com/api/record/:id
+
+**Note: "id" refers to patient ID
+
+Server returns: 
+
+[
+  {
+    "id": 1,
+    "vaccineName": "flu",
+    "vaccineDate": "2010-12-19",
+    "vaccineLocation": "New York City",
+    "patientId": 1
+  },
+  {
+    "id": 2,
+    "vaccineName": "HPV",
+    "vaccineDate": "2000-10-12",
+    "vaccineLocation": "Houston",
+    "patientId": 1
+  }
+] 
