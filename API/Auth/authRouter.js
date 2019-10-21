@@ -100,6 +100,7 @@ router.post("/med-login", (req, res) => {
       .then(pro => {
         if (pro) {
           const medtoken = generateMedToken(pro);
+          console.log(medtoken);
           res
             .status(200)
             .json({ message: `Welcome, ${pro.position}`, medtoken });
@@ -120,6 +121,7 @@ router.post("/med-login", (req, res) => {
 function generateToken(user) {
   const payload = {
     subject: user.id,
+    type: "user",
   };
   const options = {
     expiresIn: "8h",

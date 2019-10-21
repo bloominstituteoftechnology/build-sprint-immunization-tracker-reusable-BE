@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const db = require("./immunizationModel");
-const restricted = require("../PatientAPI/auth-middleware");
+const checkuser = require("../PatientAPI/auth-user-middleware");
+const checkmed = require("../PatientAPI/auth-med-middleware");
+const checkall = require("../PatientAPI/auth-all-middleware");
 
-router.get("/", restricted, (req, res) => {
+router.get("/", checkall, (req, res) => {
   db.getAll()
     .then(record => {
       res.status(200).json(record);
@@ -15,7 +17,7 @@ router.get("/", restricted, (req, res) => {
     });
 });
 
-router.get("/:id", restricted, (req, res) => {
+router.get("/:id", checkall, (req, res) => {
   const patientId = req.params.id;
   db.getByPatientId(patientId)
     .then(record => {
@@ -28,7 +30,7 @@ router.get("/:id", restricted, (req, res) => {
     });
 });
 
-router.post("/addimmunization", restricted, (req, res) => {
+router.post("/addimmunization", checkmed, (req, res) => {
   const { vaccineName, vaccineDate, vaccineLocation, patientId } = req.body;
   if (!vaccineName || !vaccineDate || !vaccineLocation || !patientId) {
     res.status(400).json({
@@ -55,7 +57,7 @@ router.post("/addimmunization", restricted, (req, res) => {
   }
 });
 
-router.delete("/vaccine/:id", (req, res) => {
+router.delete("/vaccine/:id", checkmed, (req, res) => {
   const deleteid = req.params.id;
   db.removeImmunization(deleteid)
     .then(record => {
@@ -68,11 +70,9 @@ router.delete("/vaccine/:id", (req, res) => {
       }
     })
     .catch(error => {
-      res
-        .status(500)
-        .json({
-          errorMessage: "Error removing immunization record from server",
-        });
+      res.status(500).json({
+        errorMessage: "Error removing immunization record from server",
+      });
     });
 });
 

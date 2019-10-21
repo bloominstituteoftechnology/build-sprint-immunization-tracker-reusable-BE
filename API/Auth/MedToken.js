@@ -4,6 +4,7 @@ const secret = require("../../Secrets/secret");
 function generateMedToken(pro) {
   const payload = {
     subject: pro.id,
+    type: "medical",
   };
   const options = {
     expiresIn: "8h",

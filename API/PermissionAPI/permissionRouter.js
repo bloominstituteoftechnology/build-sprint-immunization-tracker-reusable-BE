@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const db = require("./permissionModel");
-const restricted = require("../../API/PatientAPI/auth-middleware");
+const checkuser = require("../PatientAPI/auth-user-middleware");
+const checkmed = require("../PatientAPI/auth-med-middleware");
+const checkall = require("../PatientAPI/auth-all-middleware");
 
 //Get all permission records
-router.get("/", restricted, (req, res) => {
+router.get("/", checkall, (req, res) => {
   db.getAllRecord()
     .then(perm => {
       perm.forEach(patient => {
@@ -24,7 +26,7 @@ router.get("/", restricted, (req, res) => {
 });
 
 //Get permission record by Patient's ID
-router.get("/patient/:id", restricted, (req, res) => {
+router.get("/patient/:id", checkall, (req, res) => {
   const patientid = req.params.id;
   db.getRecordByPatientId(patientid)
     .then(patient => {
@@ -45,7 +47,7 @@ router.get("/patient/:id", restricted, (req, res) => {
 });
 
 //Get permission by Medical Profession's ID
-router.get("/:id", restricted, (req, res) => {
+router.get("/:id", checkmed, (req, res) => {
   const medProId = req.params.id;
   db.getRecordByPermission(medProId)
     .then(perm => {
@@ -64,7 +66,7 @@ router.get("/:id", restricted, (req, res) => {
 
 //Update permission record
 
-router.put("/update/:id", restricted, (req, res) => {
+router.put("/update/:id", checkuser, (req, res) => {
   const update = req.body;
   const updateId = req.params.id;
   console.log(req.body);
@@ -87,7 +89,7 @@ router.put("/update/:id", restricted, (req, res) => {
 });
 
 //Add permission record
-router.post("/add", restricted, (req, res) => {
+router.post("/add", checkuser, (req, res) => {
   const add = req.body;
   db.addPerm(add)
     .then(perm => {
