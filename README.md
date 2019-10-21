@@ -78,3 +78,104 @@ Server returns:
 }
 
 ---
+
+### DISPLAY PATIENT INFO RELATED TO SPECIFIC USER (GET)
+
+https://immunizationtracker-bw.herokuapp.com/api/user/:id
+
+**Note: "id" on URL refers to the USER ID, which is also stored in the token. One user may have multiple patients due to having kids profile
+
+Server returns:
+[
+  {
+    "id": 1,
+    "firstName": "Karl",
+    "lastName": "Mozart",
+    "age": 10,
+    "gender": "male",
+    "weight": "80lb",
+    "height": "4'11",
+    "patientEmail": "mozart@gmail.com",
+    "patientPhone": "123-345-5678",
+    "isChild": 1,
+    "userId": 1
+  },
+  {
+    "id": 2,
+    "firstName": "Wolfgang",
+    "lastName": "Mozart",
+    "age": 45,
+    "gender": "male",
+    "weight": "150lb",
+    "height": "5'5",
+    "patientEmail": "mozart@gmail.com",
+    "patientPhone": "123-345-5678",
+    "isChild": 0,
+    "userId": 1
+  }
+]
+
+### DISPLAY SINGLE PATIENT INFO (GET)
+
+https://immunizationtracker-bw.herokuapp.com/api/user/patient/:id
+
+**Note: "id" refers to the "patient Id" that is created when the patient is created, NOT USER ID. 
+
+Server returns: 
+{
+  "id": 6,
+  "firstName": "Alois",
+  "lastName": "Polzelli",
+  "age": 10,
+  "gender": "male",
+  "weight": "90lb",
+  "height": "5'2",
+  "patientEmail": "haydn@gmail.com",
+  "patientPhone": "123-345-5678",
+  "isChild": 1,
+  "userId": 5
+}
+
+### ADD PATIENT FROM USER ACCOUNT (POST)
+
+https://immunizationtracker-bw.herokuapp.com/api/user/addpatient
+
+Client sends: 
+{"firstName":"Jennifer", "lastName":"Lopez", "age": 40,"gender": "female", "weight": "140lb","height": "5'7","patientEmail": "jlopez@gmail.com","patientPhone": "123-345-5678","isChild": false,"userId": 2}
+
+**Note: "userId" refers to the "id" of the user that is adding the patient
+
+Server returns: 
+{
+  "message": "New patient created",
+  "patient": {
+    "id": 7
+  }
+}
+
+### Edit Patient Info from User Account (PUT)
+
+https://immunizationtracker-bw.herokuapp.com/api/user/patient/:id
+
+**Note: "Id" on URL refers to the patient id
+
+Client sends:
+
+ {"firstName":"Jennifer", "lastName":"Lopez", "age": 40,"gender": "female", "weight": "150lb","height": "5'7","patientEmail": "jlopez@gmail.com","patientPhone": "123-345-5678","isChild": false,"userId": 2}
+ 
+ Server returns:
+ 
+{
+  "message": "Patient information updated"
+}
+
+### Delete Patient Info from User Account (DELETE)
+
+https://immunizationtracker-bw.herokuapp.com/api/user/patient/7
+
+**Note: "Id" on URL refers to patient id
+
+Server returns:
+{
+  "message": "Patient deleted"
+}
