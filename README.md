@@ -198,9 +198,11 @@ Server returns:
   "message": "New permission request posted"
 }
 
-### DISPLAY LIST OF PERMISSIONS BY PATIENT (GET)
+### DISPLAY LIST OF PERMISSIONS BY PATIENT ON USER SIDE(GET)
 
-https://immunizationtracker-bw.herokuapp.com/api/perm/patient/1
+https://immunizationtracker-bw.herokuapp.com/api/perm/patient/:id
+
+**Note: "id" on URL refers to patient ID
 
 Server returns:
 
