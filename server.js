@@ -13,7 +13,7 @@ server.use(helmet());
 server.use(cors());
 
 server.use("/api/auth", authRouter);
-server.use("/api/patient", patientRouter);
+server.use("/api/user", patientRouter);
 server.use("/api/perm", permissionRouter);
 
 server.get("/", (req, res) => {
