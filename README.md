@@ -12,6 +12,8 @@ https://immunizationtracker-bw.herokuapp.com/
 
 --
 
+# REGISTRATION & LOGIN
+
 ### User Registration (POST)
 
 https://immunizationtracker-bw.herokuapp.com/api/auth/user-register
@@ -78,6 +80,8 @@ Server returns:
 }
 
 ---
+
+# PATIENT INFO (USER SIDE)
 
 ### DISPLAY PATIENT INFO RELATED TO SPECIFIC USER (GET)
 
@@ -180,5 +184,93 @@ Server returns:
   "message": "Patient deleted"
 }
 
+### GIVE PERMISSION TO MEDICAL PROFESSIONAL TO ACCESS DATA (POST)
+
+https://immunizationtracker-bw.herokuapp.com/api/perm/add
+
+Client sends:
+
+{"permission": true, "patientId":6, "medproId":1}
+
+Server returns:
+
+{
+  "message": "New permission request posted"
+}
+
+### DISPLAY LIST OF PERMISSIONS BY PATIENT (GET)
+
+https://immunizationtracker-bw.herokuapp.com/api/perm/patient/1
+
+Server returns:
+
+[
+  {
+    "permission": false,
+    "patientId": 1,
+    "medproId": 1,
+    "id": 1,
+    "firstName": "Karl",
+    "lastName": "Mozart",
+    "age": 10,
+    "gender": "male",
+    "weight": "80lb",
+    "height": "4'11",
+    "patientEmail": "mozart@gmail.com",
+    "patientPhone": "123-345-5678",
+    "isChild": 1,
+    "userId": 1
+  },
+  {
+    "permission": false,
+    "patientId": 1,
+    "medproId": 2,
+    "id": 1,
+    "firstName": "Karl",
+    "lastName": "Mozart",
+    "age": 10,
+    "gender": "male",
+    "weight": "80lb",
+    "height": "4'11",
+    "patientEmail": "mozart@gmail.com",
+    "patientPhone": "123-345-5678",
+    "isChild": 1,
+    "userId": 1
+  }
+]
+
 ---
 
+# PATIENT INFO (MEDICAL PROFESSIONAL SIDE)
+
+### DISPLAY PATIENT INFO ON MEDICAL PROFESSIONAL (GET)
+
+https://immunizationtracker-bw.herokuapp.com/api/perm/:id
+
+**Note: "Id" on URL refers to medical professional ID
+
+Server returns: 
+[
+  {
+    "permission": 1,
+    "patientId": 5,
+    "medproId": 1,
+    "id": 1,
+    "firstName": "Alois",
+    "lastName": "Polzelli",
+    "age": 10,
+    "gender": "male",
+    "weight": "90lb",
+    "height": "5'2",
+    "patientEmail": "haydn@gmail.com",
+    "patientPhone": "123-345-5678",
+    "isChild": 1,
+    "userId": 5,
+    "medicEmail": "marie@gmail.com",
+    "medicPassword": "curie",
+    "company": "MedFirst",
+    "position": "OBGYN"
+  }
+]
+
+**Note: The server will only show the information of patients who granted permission to medical professional.
