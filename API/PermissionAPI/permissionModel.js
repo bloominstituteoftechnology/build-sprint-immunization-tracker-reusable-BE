@@ -32,7 +32,6 @@ function addPerm(perm) {
 
 function updatePerm(permission, patientId, medproId) {
   return db("permissions as p")
-    .where("p.patientId", "=", patientId, "p.medproId", "=", medproId)
-
-    .update(permission);
+    .update("p.permission", permission)
+    .where("p.patientId", "=", patientId, "p.medproId", "=", medproId);
 }

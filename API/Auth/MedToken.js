@@ -3,7 +3,6 @@ const secret = require("../../Secrets/secret");
 
 function generateMedToken(pro) {
   const payload = {
-    subject: pro.medicEmail,
     subject: pro.id,
   };
   const options = {
