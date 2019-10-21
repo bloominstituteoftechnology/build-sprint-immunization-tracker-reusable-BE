@@ -27,7 +27,9 @@ function getRecordByPatientId(patientId) {
 }
 
 function addPerm(perm) {
-  return db("permissions").insert(perm);
+  return db("permissions")
+    .insert(perm)
+    .then(ids => ({ id: ids[0] }));
 }
 
 function updatePerm(update, updateId) {

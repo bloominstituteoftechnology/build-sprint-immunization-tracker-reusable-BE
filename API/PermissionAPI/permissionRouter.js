@@ -70,7 +70,7 @@ router.put("/update/:id", checkuser, (req, res) => {
   const update = req.body;
   const updateId = req.params.id;
   console.log(req.body);
-  if (!update.permission || !update.patientId || !update.medproId) {
+  if (!update.patientId || !update.medproId) {
     res.status(400).json({
       message:
         "Permission status, patient ID and medical professional ID required for updating permission status",
@@ -93,7 +93,7 @@ router.post("/add", checkuser, (req, res) => {
   const add = req.body;
   db.addPerm(add)
     .then(perm => {
-      res.status(200).json({ message: "New permission request posted" });
+      res.status(200).json({ message: "New permission request posted", perm });
     })
     .catch(error => {
       res
