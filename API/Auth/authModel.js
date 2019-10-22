@@ -1,6 +1,21 @@
 const db = require("../../data/dbConfig");
 
-module.exports = { addUser, addMedPro, findUserBy, findMedBy };
+module.exports = {
+  getAll,
+  getAllMed,
+  addUser,
+  addMedPro,
+  findUserBy,
+  findMedBy,
+};
+
+function getAll() {
+  return db("users");
+}
+
+function getAllMed() {
+  return db("medicalProfessionals");
+}
 
 function addUser(item) {
   return db("users")

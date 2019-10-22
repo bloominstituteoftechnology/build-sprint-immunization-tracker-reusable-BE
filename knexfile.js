@@ -40,6 +40,7 @@ module.exports = {
   production: {
     client: "pg",
     connection: {
+      host: "ec2-174-129-252-226.compute-1.amazonaws.com",
       database: "da331ci5il1rtb",
       user: "vhurvlbvryxlxf",
       password:
@@ -50,6 +51,7 @@ module.exports = {
       max: 10,
     },
     migrations: {
+      directory: "./data/migrations",
       tableName: "knex_migrations",
     },
   },

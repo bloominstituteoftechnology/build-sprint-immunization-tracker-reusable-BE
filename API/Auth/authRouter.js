@@ -6,6 +6,30 @@ const secret = require("../../Secrets/secret");
 const jwt = require("jsonwebtoken");
 const generateMedToken = require("./MedToken");
 
+//get all user
+router.get("/all", (req, res) => {
+  user
+    .getAll()
+    .then(users => {
+      res.status(200).json(users);
+    })
+    .catch(error => {
+      res.status(500).json({ message: "Error fetching all users" });
+    });
+});
+
+//get all medical prof
+router.get("/allmed", (req, res) => {
+  user
+    .getAllMed()
+    .then(users => {
+      res.status(200).json(users);
+    })
+    .catch(error => {
+      res.status(500).json({ message: "Error fetching all users" });
+    });
+});
+
 router.post("/user-register", (req, res) => {
   let creds = req.body;
 
