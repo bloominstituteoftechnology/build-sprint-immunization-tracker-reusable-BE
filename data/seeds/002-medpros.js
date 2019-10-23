@@ -1,3 +1,5 @@
+const bcrypt = require("bcryptjs");
+
 exports.seed = function(knex) {
   // Deletes ALL existing entries
   return knex("medicalProfessionals")
@@ -8,14 +10,18 @@ exports.seed = function(knex) {
         {
           id: 1,
           medicEmail: "marie@gmail.com",
-          medicPassword: "curie",
+          medicPassword: bcrypt.hashSync("curie", 10),
+          medicFirstName: "Marie",
+          medicLastName: "Curie",
           company: "MedFirst",
           position: "OBGYN",
         },
         {
           id: 2,
           medicEmail: "virginia@gmail.com",
-          medicPassword: "apgar",
+          medicPassword: bcrypt.hashSync("apgar", 10),
+          medicFirstName: "Virginia",
+          medicLastName: "Apgar",
           company: "Beaumont",
           position: "Pediatrician ",
         },

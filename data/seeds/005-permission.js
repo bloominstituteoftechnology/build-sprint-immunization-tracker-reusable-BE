@@ -6,7 +6,7 @@ exports.seed = function(knex) {
       // Inserts seed entries
       return knex("permissions").insert([
         { patientId: 1, medproId: 1, permission: false },
-        { patientId: 1, medproId: 2, permission: false },
+        { patientId: 2, medproId: 2, permission: false },
         { patientId: 2, medproId: 1, permission: false },
         { patientId: 2, medproId: 2, permission: false },
       ]);
