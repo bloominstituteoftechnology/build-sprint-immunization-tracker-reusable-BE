@@ -99,7 +99,9 @@ router.post("/user-login", (req, res) => {
         console.log(user);
         if (user && bcrypt.compareSync(userPassword, user.userPassword)) {
           const token = generateToken(user);
-          res.status(200).json({ message: `Welcome ${user.userName}`, token });
+          res
+            .status(200)
+            .json({ id: user.id, message: `Welcome ${user.userName}`, token });
         } else {
           res.status(401).json({ message: "Invalid User Credentials" });
         }
@@ -127,7 +129,11 @@ router.post("/med-login", (req, res) => {
           console.log(medtoken);
           res
             .status(200)
-            .json({ message: `Welcome, ${pro.position}`, medtoken });
+            .json({
+              id: pro.id,
+              message: `Welcome, ${pro.position}`,
+              medtoken,
+            });
         } else {
           res
             .status(401)
