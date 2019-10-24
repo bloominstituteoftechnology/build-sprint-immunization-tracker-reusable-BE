@@ -16,6 +16,8 @@ exports.up = function(knex) {
         .unique()
         .notNullable();
       tbl.string("medicPassword", 255).notNullable();
+      tbl.string("medicFirstName", 255).notNullable();
+      tbl.string("medicLastName", 255).notNullable();
       tbl.string("company", 255).notNullable();
       tbl.string("position", 255).notNullable();
     })

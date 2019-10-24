@@ -56,21 +56,23 @@ router.post("/user-register", (req, res) => {
 
 router.post("/med-register", (req, res) => {
   let medCreds = req.body;
-  console.log(medCreds);
+  // console.log(medCreds);
   if (
     !medCreds.medicEmail ||
     !medCreds.medicPassword ||
+    !medCreds.medicFirstName ||
+    !medCreds.medicLastName ||
     !medCreds.company ||
     !medCreds.position
   ) {
     res.status(404).json({
       message:
-        "Email, password, company and position are required for registering an account",
+        "Email, password, name, company and position are required for registering an account",
     });
   } else {
     const hash = bcrypt.hashSync(medCreds.medicPassword, 8);
     medCreds.medicPassword = hash;
-    console.log(medCreds);
+    // console.log(medCreds);
     user
       .addMedPro(medCreds)
       .then(pro => {
@@ -88,7 +90,7 @@ router.post("/med-register", (req, res) => {
 router.post("/user-login", (req, res) => {
   let { userEmail, userPassword } = req.body;
   let { id } = req.params;
-  console.log(req.body);
+
   if (!userEmail || !userPassword) {
     res.status(401).json({ message: "Missing email and password for login" });
   } else {
@@ -96,7 +98,7 @@ router.post("/user-login", (req, res) => {
       .findUserBy({ userEmail })
       .first()
       .then(user => {
-        console.log(user);
+        // console.log(user);
         if (user && bcrypt.compareSync(userPassword, user.userPassword)) {
           const token = generateToken(user);
           res
@@ -127,13 +129,11 @@ router.post("/med-login", (req, res) => {
         if (pro) {
           const medtoken = generateMedToken(pro);
           console.log(medtoken);
-          res
-            .status(200)
-            .json({
-              id: pro.id,
-              message: `Welcome, ${pro.position}`,
-              medtoken,
-            });
+          res.status(200).json({
+            id: pro.id,
+            message: `Welcome, ${pro.position}`,
+            medtoken,
+          });
         } else {
           res
             .status(401)
