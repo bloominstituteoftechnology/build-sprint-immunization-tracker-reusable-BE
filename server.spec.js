@@ -1,7 +1,8 @@
 const request = require("supertest");
 const server = require("./server");
 const db = require("./data/dbConfig");
-const checkuser = require("./API/PatientAPI/auth-user-middleware");
+
+// const checkuser = require("./API/PatientAPI/auth-user-middleware");
 
 describe("auth model", () => {
   it("should set testing environment", () => {
@@ -52,10 +53,10 @@ describe("medical professional registration", () => {
   });
 });
 
-//Registration test not working
+//Registration working
 describe("medical professional registration", () => {
   it("registration type is json", async () => {
-    await db("medicalProfessionals").truncate();
+    await db("medical_professionals").truncate();
     const med = await request(server)
       .post("/api/auth/med-register")
       .send({
@@ -67,7 +68,7 @@ describe("medical professional registration", () => {
         position: "Nurse",
       });
     // expect(med.type).toMatch(/json/i);
-    expect(med.status).toBe(200);
+    expect(med.status).toBe(201);
   });
 });
 
