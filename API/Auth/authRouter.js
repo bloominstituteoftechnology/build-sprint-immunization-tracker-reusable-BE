@@ -32,7 +32,7 @@ router.get("/allmed", (req, res) => {
 
 router.post("/user-register", (req, res) => {
   let creds = req.body;
-
+  console.log(creds);
   if (!creds.userEmail || !creds.userPassword || !creds.userName) {
     res.status(404).json({
       message:
