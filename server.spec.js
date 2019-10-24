@@ -85,17 +85,12 @@ describe("medical professional registration", () => {
 //     });
 //   });
 
-//   // it("will display data", async () => {
-//   //   const login = await request(server)
-//   //     .post("/api/auth/user-login")
-//   //     .send({ userEmail: "ladygaga@gmail.com", userPassword: "pokerface" });
-//   //   const token = login.token;
-
-//   //   return request(server)
-//   //   req.headers.authorization = token
-//   //     .get("/api/user/1")
-//   //     .then(response => {
-//   //       expect(response.status).toBe(200);
-//   //     });
-//   // });
-// });
+describe("link should not work without passing in token", () => {
+  it("throw error without token", async () => {
+    return request(server)
+      .get("/api/user/1")
+      .then(response => {
+        expect(response.status).toBe(400);
+      });
+  });
+});
