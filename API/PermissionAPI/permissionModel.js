@@ -26,10 +26,17 @@ function getRecordByPatientId(patientId) {
     .where("p.patientId", patientId);
 }
 
-function addPerm(perm) {
-  return db("permissions")
-    .insert(perm)
-    .then(ids => ({ id: ids[0] }));
+// function addPerm(perm) {
+//   return db("permissions")
+//     .insert(perm)
+//     .then(ids => ({ id: ids[0] }));
+// }
+
+async function addPerm(record) {
+  const [newPerm] = await db("permissions")
+    .insert(record)
+    .returning("*");
+  return newPerm;
 }
 
 function updatePerm(update, updateId) {
