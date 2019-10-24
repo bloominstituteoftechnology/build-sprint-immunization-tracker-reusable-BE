@@ -7,6 +7,7 @@ module.exports = {
   addMedPro,
   findUserBy,
   findMedBy,
+  findMedByMedId,
 };
 
 function getAll() {
@@ -49,4 +50,8 @@ function findUserBy(filter) {
 
 function findMedBy(filter) {
   return db("medical_professionals").where(filter);
+}
+
+function findMedByMedId(id) {
+  return db("medical_professionals").where("id", id);
 }

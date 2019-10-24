@@ -31,7 +31,9 @@ router.get("/:id", checkall, (req, res) => {
 });
 
 router.post("/addimmunization", checkmed, (req, res) => {
+
   const { vaccineName, vaccineDate, vaccineLocation, patientId, isCompleted } = req.body;
+
   if (!vaccineName || !vaccineDate || !vaccineLocation || !patientId) {
     res.status(400).json({
       message:
@@ -43,7 +45,9 @@ router.post("/addimmunization", checkmed, (req, res) => {
       vaccineDate,
       vaccineLocation,
       patientId,
-      isCompleted
+
+      isCompleted,
+
     })
       .then(record => {
         res
