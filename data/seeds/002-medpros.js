@@ -2,11 +2,11 @@ const bcrypt = require("bcryptjs");
 
 exports.seed = function(knex) {
   // Deletes ALL existing entries
-  return knex("medicalProfessionals")
+  return knex("medical_professionals")
     .del()
     .then(function() {
       // Inserts seed entries
-      return knex("medicalProfessionals").insert([
+      return knex("medical_professionals").insert([
         {
           id: 1,
           medicEmail: "marie@gmail.com",
