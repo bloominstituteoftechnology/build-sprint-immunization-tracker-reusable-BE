@@ -56,7 +56,7 @@ router.post("/user-register", (req, res) => {
 
 router.post("/med-register", (req, res) => {
   let medCreds = req.body;
-  console.log(medCreds);
+  // console.log(medCreds);
   if (
     !medCreds.medicEmail ||
     !medCreds.medicPassword ||
@@ -72,7 +72,7 @@ router.post("/med-register", (req, res) => {
   } else {
     const hash = bcrypt.hashSync(medCreds.medicPassword, 8);
     medCreds.medicPassword = hash;
-    console.log(medCreds);
+    // console.log(medCreds);
     user
       .addMedPro(medCreds)
       .then(pro => {
@@ -91,7 +91,7 @@ router.post("/med-register", (req, res) => {
 router.post("/user-login", (req, res) => {
   let { userEmail, userPassword } = req.body;
   let { id } = req.params;
-  console.log(req.body);
+
   if (!userEmail || !userPassword) {
     res.status(401).json({ message: "Missing email and password for login" });
   } else {
@@ -99,7 +99,7 @@ router.post("/user-login", (req, res) => {
       .findUserBy({ userEmail })
       .first()
       .then(user => {
-        console.log(user);
+        // console.log(user);
         if (user && bcrypt.compareSync(userPassword, user.userPassword)) {
           const token = generateToken(user);
           res
