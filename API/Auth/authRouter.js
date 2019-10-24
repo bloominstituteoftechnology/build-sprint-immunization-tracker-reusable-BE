@@ -76,6 +76,7 @@ router.post("/med-register", (req, res) => {
     user
       .addMedPro(medCreds)
       .then(pro => {
+        console.log(pro);
         res.status(201).json(pro);
       })
       .catch(error => {
