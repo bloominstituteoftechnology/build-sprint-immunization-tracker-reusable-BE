@@ -17,10 +17,17 @@ function getAllMed() {
   return db("medical_professionals");
 }
 
-function addUser(item) {
-  return db("users")
-    .insert(item)
-    .then(ids => ({ id: ids[0] }));
+// function addUser(item) {
+//   return db("users")
+//     .insert(item)
+//     .then(ids => ({ id: ids[0] }));
+// }
+
+async function addUser(user) {
+  const [newUser] = await db("users")
+    .insert(user)
+    .returning("*");
+  return newUser;
 }
 
 // function addMedPro(item) {
