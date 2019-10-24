@@ -23,10 +23,17 @@ function addUser(item) {
     .then(ids => ({ id: ids[0] }));
 }
 
-function addMedPro(item) {
-  return db("medical_professionals")
-    .insert(item)
-    .then(ids => ({ id: ids[0] }));
+// function addMedPro(item) {
+//   return db("medical_professionals")
+//     .insert(item)
+//     .then(ids => ({ id: ids[0] }));
+// }
+
+async function addMedPro(user) {
+  const [newMed] = await db("medical_professionals")
+    .insert(user)
+    .returning("*");
+  return newMed;
 }
 
 function findUserBy(filter) {
