@@ -9,7 +9,7 @@ exports.up = function(knex) {
       tbl.string("userPassword", 255).notNullable();
       tbl.string("userName", 128).notNullable();
     })
-    .createTable("medicalProfessionals", tbl => {
+    .createTable("medical_professionals", tbl => {
       tbl.increments();
       tbl
         .string("medicEmail", 128)
@@ -39,7 +39,7 @@ exports.up = function(knex) {
         .references("id")
         .inTable("users");
     })
-    .createTable("immunizationRecords", tbl => {
+    .createTable("immunization_records", tbl => {
       tbl.increments();
       tbl.string("vaccineName").notNullable();
       tbl.date("vaccineDate");
@@ -50,6 +50,7 @@ exports.up = function(knex) {
         .notNullable()
         .references("id")
         .inTable("patients");
+      tbl.boolean("isCompleted").defaultTo(false);
     })
     .createTable("permissions", tbl => {
       tbl.increments();
@@ -65,15 +66,15 @@ exports.up = function(knex) {
         .unsigned()
         .notNullable()
         .references("id")
-        .inTable("medicalProfessionals");
+        .inTable("medical_professionals");
     });
 };
 
 exports.down = function(knex) {
   return knex.schema
     .dropTableIfExists("permissions")
-    .dropTableIfExists("immunizationRecords")
+    .dropTableIfExists("immunization_records")
     .dropTableIfExists("patients")
-    .dropTableIfExists("medicalProfessionals")
+    .dropTableIfExists("medical_professionals")
     .dropTableIfExists("users");
 };
