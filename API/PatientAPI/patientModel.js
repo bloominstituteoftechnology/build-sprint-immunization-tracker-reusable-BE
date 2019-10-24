@@ -23,10 +23,17 @@ function getPatientById(id) {
     .first();
 }
 
-function addPatient(patient, id) {
-  return db("patients")
-    .insert(patient)
-    .then(ids => ({ id: ids[0] }));
+// function addPatient(patient, id) {
+//   return db("patients")
+//     .insert(patient)
+//     .then(ids => ({ id: ids[0] }));
+// }
+
+async function addPatient(user) {
+  const [newPatient] = await db("patients")
+    .insert(user)
+    .returning("*");
+  return newPatient;
 }
 
 function updatePatient(patient, id) {
