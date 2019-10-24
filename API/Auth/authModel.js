@@ -14,7 +14,7 @@ function getAll() {
 }
 
 function getAllMed() {
-  return db("medicalProfessionals");
+  return db("medical_professionals");
 }
 
 function addUser(item) {
@@ -24,7 +24,7 @@ function addUser(item) {
 }
 
 function addMedPro(item) {
-  return db("medicalProfessionals")
+  return db("medical_professionals")
     .insert(item)
     .then(ids => ({ id: ids[0] }));
 }
@@ -34,5 +34,5 @@ function findUserBy(filter) {
 }
 
 function findMedBy(filter) {
-  return db("medicalProfessionals").where(filter);
+  return db("medical_professionals").where(filter);
 }
