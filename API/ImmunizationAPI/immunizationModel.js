@@ -8,19 +8,19 @@ module.exports = {
 };
 
 function addImmunization(record) {
-  return db("immunizationRecords").insert(record);
+  return db("immunization_records").insert(record);
 }
 
 function getAll() {
-  return db("immunizationRecords");
+  return db("immunization_records");
 }
 
 function getByPatientId(id) {
-  return db("immunizationRecords").where("patientId", id);
+  return db("immunization_records").where("patientId", id);
 }
 
 function removeImmunization(id) {
-  return db("immunizationRecords")
+  return db("immunization_records")
     .where("id", id)
     .del();
 }
