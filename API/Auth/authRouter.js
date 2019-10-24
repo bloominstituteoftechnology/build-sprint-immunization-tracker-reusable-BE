@@ -149,6 +149,22 @@ router.post("/med-login", (req, res) => {
   }
 });
 
+router.get("/med/:id", (req, res) => {
+  const medId = req.params.id;
+  console.log();
+  user
+    .findMedByMedId(medId)
+    .then(med => {
+      res.status(200).json(med);
+    })
+    .catch(error => {
+      res.status(500).json({
+        errorMessage:
+          "Error fetching medical professional by med id from server",
+      });
+    });
+});
+
 function generateToken(user) {
   const payload = {
     subject: user.id,
