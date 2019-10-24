@@ -15,7 +15,7 @@ function getAllRecord() {
 function getRecordByPermission(medId) {
   return db("permissions as p")
     .join("patients as pa", "pa.id", "p.patientId")
-    .join("medicalProfessionals as m", "p.medproId", "m.id")
+    .join("medical_professionals as m", "p.medproId", "m.id")
     .where("p.medproId", medId)
     .where("p.permission", true);
 }
